@@ -1,11 +1,20 @@
-import React from 'react'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+import Navbar from "./components/navbar";
+import Homepage from "./pages/Homepage";
 
-const App = () => {
+function App() {
   return (
-    <div className='w-full bg-blue-700 h-screen'>
-      <h1 className='text-white text-4xl font-bold text-center mt-20'>Welcome to SBL COSMETICS!</h1>
+    <div className="min-h-screen bg-[#050b16] text-white">
+      <Header />
+      <Navbar />
+      <Homepage />
+      <main>
+        <Outlet />
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
