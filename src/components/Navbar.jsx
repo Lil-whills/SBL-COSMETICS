@@ -12,7 +12,7 @@ const navItems = [
 
 const Navbar = () => {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-cyan-900/40 bg-[#0b1628]/95 backdrop-blur-md">
+    <nav className="sticky top-11 z-50 w-full border-b border-cyan-900/40 bg-[#0b1628]/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-center gap-4 px-4 sm:gap-6 sm:px-6 lg:gap-10 lg:px-8 overflow-x-auto">
         {navItems.map((item) => (
           <NavLink
@@ -30,7 +30,7 @@ const Navbar = () => {
               <span className="relative pb-1">
                 {item.label}
                 <span
-                  className={`absolute left-0 -bottom-1 h-[2px] rounded-full bg-lime-300 transition-all duration-300 ${
+                  className={`absolute left-0 -bottom-1 h-0.5 rounded-full bg-lime-300 transition-all duration-300 ${
                     isActive ? "w-full" : "w-0"
                   }`}
                 />

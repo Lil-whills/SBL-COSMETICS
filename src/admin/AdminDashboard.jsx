@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-[#050b16] px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="rounded-[2rem] border border-cyan-900/30 bg-gradient-to-br from-[#08111f] via-[#0b1628] to-[#10223d] px-6 py-8 shadow-2xl sm:px-8">
+        <div className="rounded-4xl border border-cyan-900/30 bg-linear-to-br from-[#08111f] via-[#0b1628] to-[#10223d] px-6 py-8 shadow-2xl sm:px-8">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-lime-300">
@@ -41,13 +41,13 @@ const AdminDashboard = () => {
 
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           <button
-            onClick={() => navigate("/admin")}
+            onClick={() => navigate("/admin/overview")}
             className="rounded-[1.75rem] border border-cyan-900/30 bg-[#0b1628] p-6 text-left shadow-lg transition hover:-translate-y-1 hover:border-cyan-700/50"
           >
             <LayoutDashboard size={28} className="text-lime-300" />
             <h2 className="mt-4 text-xl font-semibold">Overview</h2>
             <p className="mt-2 text-slate-400">
-              View your admin summary and quick actions.
+              View total product and blog posts with quick links.
             </p>
           </button>
 

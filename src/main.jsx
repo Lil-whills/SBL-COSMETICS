@@ -13,6 +13,7 @@ import ProductDetails from "./pages/productDetails";
 import BlogDetails from "./pages/BlogDetails";
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
+import AdminOverview from "./admin/AdminOverview";
 import ProtectedRoute from "./admin/ProtectedRoute";
 import ManageProduct from "./admin/ManageProduct";
 import ManageBlog from "./admin/ManageBlog";
@@ -38,6 +39,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           element={
             <ProtectedRoute>
               <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/overview"
+          element={
+            <ProtectedRoute>
+              <AdminOverview />
             </ProtectedRoute>
           }
         />

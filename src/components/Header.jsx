@@ -3,7 +3,7 @@ import { PhoneCall, Bell, UserRoundPlus } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="w-full bg-[#08111f] border-b border-cyan-900/40 text-white">
+    <header className="sticky top-0 z-60 w-full border-b border-cyan-900/40 bg-[#08111f] text-white">
       <div className="mx-auto flex h-11 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2 text-sm text-slate-200">
           <PhoneCall size={16} className="text-lime-300" />
