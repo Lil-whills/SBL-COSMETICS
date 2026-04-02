@@ -1,28 +1,41 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, PhoneCall, Star, Tag } from "lucide-react";
-import products from "../data/products";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { ArrowLeft, PhoneCall, Star, Tag, MessageCircle } from "lucide-react";
+import { getStoredProducts } from "../utils/productStorage";
 
 const ProductDetails = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
 
-  const product = useMemo(
-  () => products.find((item) => item.slug === slug),
-  [slug]
-);
+  const product = useMemo(() => {
+    const products = getStoredProducts();
+    return products.find((item) => item.slug === slug);
+  }, [slug]);
 
-const [selectedImage, setSelectedImage] = useState("");
+  const relatedProducts = useMemo(() => {
+    const products = getStoredProducts();
 
-useEffect(() => {
-  if (product) {
-    setSelectedImage(product.images?.[0] || product.image);
-  }
-}, [product]);
+    if (!product) return [];
+
+    return products
+      .filter(
+        (item) => item.category === product.category && item.id !== product.id
+      )
+      .slice(0, 4);
+  }, [product]);
+
+  const [selectedImage, setSelectedImage] = useState("");
+
+  useEffect(() => {
+    if (product) {
+      setSelectedImage(product.images?.[0] || product.image);
+    }
+  }, [product]);
 
   if (!product) {
     return (
       <div className="min-h-screen bg-[#050b16] px-4 py-16 text-white sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-cyan-900/30 bg-[#0b1628] p-10 text-center">
+        <div className="mx-auto max-w-4xl rounded-4xl border border-cyan-900/30 bg-[#0b1628] p-10 text-center">
           <h1 className="text-3xl font-bold">Product not found</h1>
           <p className="mt-3 text-slate-400">
             The product you are looking for does not exist.
@@ -38,10 +51,6 @@ useEffect(() => {
     );
   }
 
-  const relatedProducts = products
-    .filter((item) => item.category === product.category && item.id !== product.id)
-    .slice(0, 4);
-
   return (
     <div className="min-h-screen bg-[#050b16] text-white">
       <section className="px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -54,14 +63,14 @@ useEffect(() => {
             Back to Products
           </Link>
 
-          <div className="grid grid-cols-1 gap-8 overflow-hidden rounded-[2rem] border border-cyan-900/30 bg-[#0b1628] p-6 shadow-2xl lg:grid-cols-2 lg:p-8">
+          <div className="grid grid-cols-1 gap-8 overflow-hidden rounded-4xl border border-cyan-900/30 bg-[#0b1628] p-6 shadow-2xl lg:grid-cols-2 lg:p-8">
             {/* Images */}
             <div className="space-y-4">
-              <div className="overflow-hidden rounded-[1.5rem] border border-cyan-900/30 bg-[#09111d]">
+              <div className="overflow-hidden rounded-3xl border border-cyan-900/30 bg-[#09111d]">
                 <img
                   src={selectedImage}
                   alt={product.name}
-                  className="h-[400px] w-full object-cover md:h-[520px]"
+                  className="h-100 w-full object-cover md:h-130"
                 />
               </div>
 
@@ -151,15 +160,28 @@ useEffect(() => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4 pt-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-lime-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-lime-200">
+              <div>
+                <button
+                  onClick={() => navigate("/contact")}
+                  className="inline-flex items-center gap-2 rounded-full bg-lime-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-lime-200"
+                >
                   <PhoneCall size={18} />
                   Call to Order
                 </button>
 
-                <button className="rounded-full border border-cyan-800/50 px-6 py-3 font-semibold text-cyan-200 transition hover:bg-cyan-900/30 hover:text-white">
+                <a
+                  href={`https://wa.me/233557246726?text=${encodeURIComponent(
+                    "Hello SBL Cosmetics, I'm interested in the " +
+                      product.name +
+                      ". Can you tell me more details?"
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-cyan-800/50 px-6 py-3 font-semibold text-cyan-200 transition hover:bg-cyan-900/30 hover:text-white"
+                >
+                  <MessageCircle size={18} />
                   Message on WhatsApp
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -181,7 +203,7 @@ useEffect(() => {
               <Link
                 key={item.id}
                 to={`/products/${item.slug}`}
-                className="overflow-hidden rounded-[1.5rem] border border-cyan-900/30 bg-[#0b1628] transition hover:-translate-y-1 hover:border-cyan-700/50"
+                className="overflow-hidden rounded-3xl border border-cyan-900/30 bg-[#0b1628] transition hover:-translate-y-1 hover:border-cyan-700/50"
               >
                 <div className="h-56 overflow-hidden bg-[#09111d]">
                   <img

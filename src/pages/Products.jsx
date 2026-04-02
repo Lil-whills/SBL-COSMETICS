@@ -1,11 +1,26 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import ProductCard from "../components/ProductCard";
-import products, { productCategories } from "../data/products";
+import { productCategories } from "../data/products";
+import {
+  getStoredProducts,
+  onProductsUpdated,
+} from "../utils/productStorage";
 
 const Products = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
+const [searchTerm, setSearchTerm] = useState("");
+const [products, setProducts] = useState([]);
+
+useEffect(() => {
+  setProducts(getStoredProducts());
+
+  const unsubscribe = onProductsUpdated((updatedProducts) => {
+    setProducts(updatedProducts);
+  });
+
+  return unsubscribe;
+}, []);
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
@@ -23,7 +38,7 @@ const Products = () => {
 
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchTerm]);
+  }, [products, activeCategory, searchTerm]);
 
   return (
     <div className="min-h-screen bg-[#050b16] text-white">
@@ -120,7 +135,7 @@ const Products = () => {
       <section className="px-4 pb-14 sm:px-6 lg:px-8 lg:pb-20">
         <div className="mx-auto max-w-7xl">
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 xl:grid-cols-3">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

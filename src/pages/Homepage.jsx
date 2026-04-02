@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   PhoneCall,
@@ -93,6 +94,7 @@ const trendingProducts = [
 ];
 
 const Homepage = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#050b16] text-white">
       {/* Hero Section */}
@@ -114,12 +116,16 @@ const Homepage = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <button className="inline-flex items-center gap-2 rounded-full bg-lime-300 px-6 py-3 font-semibold text-slate-950 transition hover:scale-105 hover:bg-lime-200">
+              <button 
+                onClick={()=>navigate('/contact')}
+              className="inline-flex items-center gap-2 rounded-full bg-lime-300 px-6 py-3 font-semibold text-slate-950 transition hover:scale-105 hover:bg-lime-200">
                 <PhoneCall size={18} />
                 Call Now
               </button>
 
-              <button className="inline-flex items-center gap-2 rounded-full border border-cyan-700/50 px-6 py-3 font-semibold text-cyan-200 transition hover:bg-cyan-900/30 hover:text-white">
+              <button 
+                onClick={()=>navigate('/products')}
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-700/50 px-6 py-3 font-semibold text-cyan-200 transition hover:bg-cyan-900/30 hover:text-white">
                 <ShoppingBag size={18} />
                 Explore Products
               </button>
@@ -292,7 +298,9 @@ const Homepage = () => {
           </div>
 
           <div className="mt-10 flex justify-center">
-            <button className="rounded-full bg-lime-300 px-7 py-3 font-semibold text-slate-950 transition hover:scale-105 hover:bg-lime-200">
+            <button 
+              onClick={()=>navigate('/products')}
+            className="rounded-full bg-lime-300 px-7 py-3 font-semibold text-slate-950 transition hover:scale-105 hover:bg-lime-200">
               View All Products
             </button>
           </div>
