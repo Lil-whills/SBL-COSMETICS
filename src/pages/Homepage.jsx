@@ -288,8 +288,10 @@ const Homepage = () => {
                     </span>
                   </div>
 
-                  <button className="mt-2 inline-flex items-center gap-2 rounded-full border border-cyan-800/50 px-4 py-2 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-900/30 hover:text-white">
-                    View Product
+                  <button 
+                  onClick={()=>navigate('/products')}
+                  className="mt-2 inline-flex items-center gap-2 rounded-full border border-cyan-800/50 px-4 py-2 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-900/30 hover:text-white">
+                    View All Products
                     <ArrowRight size={16} />
                   </button>
                 </div>

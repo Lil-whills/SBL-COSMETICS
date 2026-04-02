@@ -1,6 +1,39 @@
 import seededBlogs from "../data/blogs";
 
 const BLOG_STORAGE_KEY = "sbl_blogs";
+const BLOG_STORAGE_VERSION_KEY = "sbl_blogs_version";
+const BLOG_STORAGE_VERSION = "2";
+
+const migrateSeededBlogs = (storedBlogs) => {
+  if (!Array.isArray(storedBlogs)) return seededBlogs;
+
+  const seededBySlug = new Map(seededBlogs.map((blog) => [blog.slug, blog]));
+  const storedSeededSlugs = new Set();
+
+  const mergedBlogs = storedBlogs.map((storedBlog) => {
+    const seededBlog = seededBySlug.get(storedBlog.slug);
+
+    if (!seededBlog) return storedBlog;
+
+    storedSeededSlugs.add(storedBlog.slug);
+
+    // Keep user-facing mutable fields like likes/ids while refreshing seed content.
+    return {
+      ...storedBlog,
+      ...seededBlog,
+      id: storedBlog.id,
+      likes: Number(storedBlog.likes) || seededBlog.likes || 0,
+      createdAt: storedBlog.createdAt || seededBlog.createdAt,
+      updatedAt: new Date().toISOString(),
+    };
+  });
+
+  const missingSeededBlogs = seededBlogs.filter(
+    (blog) => !storedSeededSlugs.has(blog.slug)
+  );
+
+  return [...mergedBlogs, ...missingSeededBlogs];
+};
 
 const emitBlogsUpdated = (blogs) => {
   window.dispatchEvent(
@@ -12,16 +45,28 @@ const emitBlogsUpdated = (blogs) => {
 
 export const getStoredBlogs = () => {
   const existing = localStorage.getItem(BLOG_STORAGE_KEY);
+  const currentVersion = localStorage.getItem(BLOG_STORAGE_VERSION_KEY);
 
   if (!existing) {
     localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(seededBlogs));
+    localStorage.setItem(BLOG_STORAGE_VERSION_KEY, BLOG_STORAGE_VERSION);
     return seededBlogs;
   }
 
   try {
-    return JSON.parse(existing);
+    const parsedBlogs = JSON.parse(existing);
+
+    if (currentVersion !== BLOG_STORAGE_VERSION) {
+      const migratedBlogs = migrateSeededBlogs(parsedBlogs);
+      localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(migratedBlogs));
+      localStorage.setItem(BLOG_STORAGE_VERSION_KEY, BLOG_STORAGE_VERSION);
+      return migratedBlogs;
+    }
+
+    return parsedBlogs;
   } catch (error) {
     localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(seededBlogs));
+    localStorage.setItem(BLOG_STORAGE_VERSION_KEY, BLOG_STORAGE_VERSION);
     return seededBlogs;
   }
 };

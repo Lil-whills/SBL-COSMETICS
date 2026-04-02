@@ -1,8 +1,58 @@
 import seededProducts from "../data/products";
 
 const PRODUCT_STORAGE_KEY = "sbl_products";
+const PRODUCT_STORAGE_VERSION_KEY = "sbl_products_version";
+const PRODUCT_STORAGE_VERSION = "3";
 
 const normalizeId = (id) => String(id);
+
+const withSeedFlag = (product, isSeeded) => ({
+  ...product,
+  isSeeded,
+});
+
+const isLikelySeededRecord = (product) => {
+  if (product?.isSeeded === true) return true;
+  return !product?.createdAt;
+};
+
+const migrateSeededProducts = (storedProducts) => {
+  if (!Array.isArray(storedProducts)) return seededProducts;
+
+  const seededBySlug = new Map(seededProducts.map((item) => [item.slug, item]));
+  const storedSeededSlugs = new Set();
+
+  const mergedProducts = storedProducts.flatMap((storedProduct) => {
+    const seededProduct = seededBySlug.get(storedProduct.slug);
+
+    if (!seededProduct) {
+      // If a record looks seeded but is no longer in seed data, drop it.
+      if (isLikelySeededRecord(storedProduct)) return [];
+      return [withSeedFlag(storedProduct, false)];
+    }
+
+    storedSeededSlugs.add(storedProduct.slug);
+
+    return [
+      {
+      ...storedProduct,
+      ...seededProduct,
+      image: seededProduct.image,
+      images: Array.isArray(seededProduct.images)
+        ? seededProduct.images
+        : storedProduct.images,
+      updatedAt: new Date().toISOString(),
+      isSeeded: true,
+      },
+    ];
+  });
+
+  const missingSeededProducts = seededProducts.filter(
+    (item) => !storedSeededSlugs.has(item.slug)
+  ).map((item) => withSeedFlag(item, true));
+
+  return [...mergedProducts, ...missingSeededProducts];
+};
 
 const emitProductsUpdated = (products) => {
   window.dispatchEvent(
@@ -14,16 +64,34 @@ const emitProductsUpdated = (products) => {
 
 export const getStoredProducts = () => {
   const existing = localStorage.getItem(PRODUCT_STORAGE_KEY);
+  const currentVersion = localStorage.getItem(PRODUCT_STORAGE_VERSION_KEY);
 
   if (!existing) {
-    localStorage.setItem(PRODUCT_STORAGE_KEY, JSON.stringify(seededProducts));
-    return seededProducts;
+    localStorage.setItem(
+      PRODUCT_STORAGE_KEY,
+      JSON.stringify(seededProducts.map((item) => withSeedFlag(item, true)))
+    );
+    localStorage.setItem(PRODUCT_STORAGE_VERSION_KEY, PRODUCT_STORAGE_VERSION);
+    return seededProducts.map((item) => withSeedFlag(item, true));
   }
 
   try {
-    return JSON.parse(existing);
+    const parsedProducts = JSON.parse(existing);
+
+    if (currentVersion !== PRODUCT_STORAGE_VERSION) {
+      const migratedProducts = migrateSeededProducts(parsedProducts);
+      localStorage.setItem(PRODUCT_STORAGE_KEY, JSON.stringify(migratedProducts));
+      localStorage.setItem(
+        PRODUCT_STORAGE_VERSION_KEY,
+        PRODUCT_STORAGE_VERSION
+      );
+      return migratedProducts;
+    }
+
+    return parsedProducts;
   } catch (error) {
     localStorage.setItem(PRODUCT_STORAGE_KEY, JSON.stringify(seededProducts));
+    localStorage.setItem(PRODUCT_STORAGE_VERSION_KEY, PRODUCT_STORAGE_VERSION);
     return seededProducts;
   }
 };
@@ -73,6 +141,7 @@ export const addProduct = (productData) => {
     tags: productData.tags || [],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    isSeeded: false,
     ...productData,
   };
 

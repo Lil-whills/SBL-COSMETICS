@@ -1,9 +1,20 @@
-import heropic from "../assets/heroPic.png";
-import haircream from "../assets/haircream.png";
-import skincare from "../assets/skincare.png";
-import perfume from "../assets/perfume.png";
 import makeup from "../assets/makeup.png";
 import lipstick from "../assets/lipstick.png";
+import packaging from "../assets/packaging.png";
+import sbl1 from "../assets/sbl1.jpg";
+import sbl2 from "../assets/sbl2.jpg";
+import sbl3 from "../assets/sbl3.jpg";
+import sbl4 from "../assets/sbl4.jpg";
+import sbl5 from "../assets/sbl5.jpg";
+import sbl6 from "../assets/sbl6.jpg";
+import sbl7 from "../assets/sbl7.jpg";
+import sbl8 from "../assets/sbl8.jpg";
+import sbl10 from "../assets/sbl10.jpg";
+import sbl11 from "../assets/sbl11.jpg";
+import sbl12 from "../assets/sbl12.jpg";
+import sbl13 from "../assets/sbl13.jpg";
+import sbl14 from "../assets/sbl14.jpg";
+import sbl15 from "../assets/sbl15.jpg";
 
 export const productCategories = [
   "All",
@@ -25,8 +36,8 @@ export const products = [
     price: 180,
     oldPrice: 220,
     currency: "GHS",
-    image: perfume,
-    images: [perfume, heropic],
+    image: sbl1,
+    images: [sbl1, sbl2],
     rating: 4.8,
     reviews: 124,
     stock: "In Stock",
@@ -47,8 +58,8 @@ export const products = [
     price: 165,
     oldPrice: 195,
     currency: "GHS",
-    image: heropic,
-    images: [heropic, perfume],
+    image: sbl2,
+    images: [sbl2, sbl1],
     rating: 4.6,
     reviews: 98,
     stock: "In Stock",
@@ -69,8 +80,8 @@ export const products = [
     price: 150,
     oldPrice: 180,
     currency: "GHS",
-    image: perfume,
-    images: [perfume, heropic],
+    image: sbl3,
+    images: [sbl3, sbl4],
     rating: 4.5,
     reviews: 86,
     stock: "In Stock",
@@ -91,8 +102,8 @@ export const products = [
     price: 120,
     oldPrice: 145,
     currency: "GHS",
-    image: skincare,
-    images: [skincare, heropic],
+    image: sbl4,
+    images: [sbl4, sbl5],
     rating: 4.7,
     reviews: 110,
     stock: "In Stock",
@@ -113,8 +124,8 @@ export const products = [
     price: 95,
     oldPrice: 115,
     currency: "GHS",
-    image: skincare,
-    images: [skincare],
+    image: packaging,
+    images: [packaging],
     rating: 4.4,
     reviews: 72,
     stock: "In Stock",
@@ -135,8 +146,8 @@ export const products = [
     price: 85,
     oldPrice: 100,
     currency: "GHS",
-    image: skincare,
-    images: [skincare],
+    image: sbl5,
+    images: [sbl5, sbl6],
     rating: 4.3,
     reviews: 59,
     stock: "In Stock",
@@ -157,8 +168,8 @@ export const products = [
     price: 90,
     oldPrice: 110,
     currency: "GHS",
-    image: haircream,
-    images: [haircream],
+    image: sbl6,
+    images: [sbl6],
     rating: 4.7,
     reviews: 134,
     stock: "In Stock",
@@ -179,8 +190,8 @@ export const products = [
     price: 98,
     oldPrice: 120,
     currency: "GHS",
-    image: haircream,
-    images: [haircream],
+    image: sbl7,
+    images: [sbl7],
     rating: 4.5,
     reviews: 67,
     stock: "In Stock",
@@ -201,8 +212,8 @@ export const products = [
     price: 75,
     oldPrice: 92,
     currency: "GHS",
-    image: haircream,
-    images: [haircream],
+    image: sbl8,
+    images: [sbl8],
     rating: 4.2,
     reviews: 48,
     stock: "Low Stock",
@@ -223,8 +234,8 @@ export const products = [
     price: 110,
     oldPrice: 130,
     currency: "GHS",
-    image: heropic,
-    images: [heropic, skincare],
+    image: sbl10,
+    images: [sbl10, sbl10],
     rating: 4.6,
     reviews: 88,
     stock: "In Stock",
@@ -245,8 +256,8 @@ export const products = [
     price: 105,
     oldPrice: 125,
     currency: "GHS",
-    image: heropic,
-    images: [heropic],
+    image: sbl11,
+    images: [sbl11],
     rating: 4.4,
     reviews: 54,
     stock: "In Stock",
@@ -267,8 +278,8 @@ export const products = [
     price: 125,
     oldPrice: 145,
     currency: "GHS",
-    image: skincare,
-    images: [skincare, heropic],
+    image: sbl12,
+    images: [sbl12, sbl13],
     rating: 4.5,
     reviews: 61,
     stock: "In Stock",
@@ -289,8 +300,8 @@ export const products = [
     price: 140,
     oldPrice: 165,
     currency: "GHS",
-    image: makeup,
-    images: [makeup],
+    image: sbl14,
+    images: [sbl14],
     rating: 4.8,
     reviews: 103,
     stock: "In Stock",
@@ -311,8 +322,8 @@ export const products = [
     price: 60,
     oldPrice: 75,
     currency: "GHS",
-    image: makeup,
-    images: [makeup],
+    image: sbl15,
+    images: [sbl15],
     rating: 4.3,
     reviews: 44,
     stock: "In Stock",
@@ -334,7 +345,7 @@ export const products = [
     oldPrice: 180,
     currency: "GHS",
     image: makeup,
-    images: [makeup, lipstick],
+    images: [makeup],
     rating: 4.6,
     reviews: 58,
     stock: "Low Stock",
@@ -368,50 +379,7 @@ export const products = [
       "Ruby Matte Lipstick delivers strong color payoff with a modern matte look that still feels comfortable on the lips.",
     tags: ["matte", "bold", "lipstick", "beauty"],
   },
-  {
-    id: 17,
-    slug: "nude-glam-lipstick",
-    name: "Nude Glam Lipstick",
-    category: "Lipsticks",
-    brand: "SBL Cosmetics",
-    price: 52,
-    oldPrice: 65,
-    currency: "GHS",
-    image: lipstick,
-    images: [lipstick],
-    rating: 4.5,
-    reviews: 81,
-    stock: "In Stock",
-    badge: "Featured",
-    featured: false,
-    newArrival: true,
-    shortDescription: "Soft nude shade for elegant everyday wear.",
-    description:
-      "Nude Glam Lipstick is perfect for clean beauty looks, offering a subtle classy tone that works across many styles.",
-    tags: ["nude", "daily wear", "soft glam", "lipstick"],
-  },
-  {
-    id: 18,
-    slug: "berry-shine-lipstick",
-    name: "Berry Shine Lipstick",
-    category: "Lipsticks",
-    brand: "SBL Cosmetics",
-    price: 58,
-    oldPrice: 72,
-    currency: "GHS",
-    image: lipstick,
-    images: [lipstick, makeup],
-    rating: 4.4,
-    reviews: 63,
-    stock: "In Stock",
-    badge: "Sale",
-    featured: false,
-    newArrival: false,
-    shortDescription: "Creamy lipstick with a bright glossy berry finish.",
-    description:
-      "Berry Shine Lipstick adds a lively pop of color and a smooth glossy touch for standout beauty moments.",
-    tags: ["berry", "shine", "creamy", "glossy"],
-  },
+  
 ];
 
 export default products;
